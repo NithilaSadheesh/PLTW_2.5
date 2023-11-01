@@ -1,18 +1,35 @@
 /*
- * Activity 2.5.2
- *
- * A Board class the PhraseSolverGame
+*
  */
 import java.util.Scanner;
 import java.io.File;
 
-public class Board
+/** 
+Board class: creates a board with the secret phrase and what the player has solved so far
+Contains the current value of the letter that the player has guessed 
+Checks to see if the user's guess is valid and found within secret phrase 
+
+@author: Paige Nothelfer, Nithila Sadheesh, Sanjitha Saravanan
+@version: 1
+
+*/
+public class  Board
 {
   private String solvedPhrase;
   private String phrase;
   private int currentLetterValue; 
 
-  /* your code here - constructor(s) */ 
+  /** 
+  Constructor 
+  @param none
+  @return void
+  @throws none
+  Initializes solvedPhrase, phrase, and currentLetterValue
+  Pre-condition: loadPhrase() and setLetterValue() are properly declared and written, 
+    instance variables are properly declared 
+  Post-condition: solvedPhrase, phrase, and currentLetterValue are initialized and 
+    solvedPhrase and setLetterValue have assigned values 
+  */ 
   public void Board() {
     solvedPhrase = loadPhrase(); 
     phrase = "";
@@ -21,37 +38,77 @@ public class Board
     //System.out.println("Phrase: " + phrase); 
   }
 
-  /*public void Board(String sP, string p, int cLV) {
-    solvedPhrase = sP;
-    phrase = p;
-    currentLetterValue = cLV; 
-  }*/
+  /** 
+  Accessor 
+  @param none
+  @return String 
+  @throws none
+  Returns the value of phrase to method call 
+  Pre-condition: method call is assigned to variable or printed, phrase is properly declared 
+  Post-condition: phrase is returned to method call 
+  */
+  public String getPhrase() {
+    return phrase; 
+  }
   
   /* your code here - accessor(s) */
+  /** 
+  Accessor 
+  @param none
+  @return String 
+  @throws none
+  Returns the value of solvedPhrase to method call 
+  Pre-condition: method call is assigned to variable or printed, solvedPhrase is properly 
+    initialized and declared 
+  Post-condition: solvedPhrase is returned to method call 
+  */
   public String getSolvedPhrase() {
     return solvedPhrase; 
   }
 
+  /** 
+  Accessor 
+  @param none
+  @return int 
+  @throws none
+  Returns the value of currentLetterValue to method call 
+  Pre-condition: method call is assigned to variable or printed, currentLetterValue is 
+    properly initialized and declared 
+  Post-condition: currentLetterValue is returned to method call 
+  */
   public int getCurrentLetterValue() {
     return currentLetterValue; 
   }
+
   
   /* your code here - mutator(s)  */
-  /*public void setSolvedPhrase(String sp) {
-    solvedPhrase = sp; 
-  }*/
-
-  /*public void setPhrase(String p) {
-    phrase = p;
-  }*/
 
   /* ---------- provided code, do not modify ---------- */
+  /** 
+  setLetterValue() 
+  @param none
+  @return void 
+  @throws none
+  Sets currentLetterValue to a random number from 1-100 
+  Pre-condition: currentLetterValue is properly declared 
+  Post-condition: currentLetterValue is set to a random value each time method is called 
+  */
   public void setLetterValue()
   {
     int randomInt = (int) ((Math.random() * 10) + 1) * 100;    
     currentLetterValue = randomInt;
   }
 
+  /** 
+  isSolved() 
+  @param String
+  @return boolean 
+  @throws none
+  Checks if the phrase is the same as the guess passed to the method 
+  Pre-condition: method call is assigned to variable or printed, phrase and guess are 
+    properly declared and intialized
+  Post-condition: true or false is returned to the method call  
+  */
   public boolean isSolved(String guess)
   {
     if (phrase.equals(guess))
@@ -61,6 +118,16 @@ public class Board
     return false;
   }
 
+  /** 
+  loadPhrase() 
+  @param none
+  @return String 
+  @throws 
+  Returns a random phrase to the method call  
+  Pre-condition: method call is assigned to variable or printed, solvedPhrase is properly 
+    declared, phrase.txt exists
+  Post-condition: a random String from the text file is returned to method call  
+  */
   private String loadPhrase()
   {
     String tempPhrase = "";
@@ -108,24 +175,34 @@ public class Board
     return tempPhrase;
   }  
 
+  /** 
+  guessLetter() 
+  @param String
+  @return boolean 
+  Checks if the user's letter is found within the secret phrase   
+  Pre-condition: method call is assigned to variable or printed, solvedPhrase and phrase are 
+    properly declared 
+  Post-condition: true or false is returned to the method call, solvedPhrase is set to a new
+    phrase that contains the guessed letters 
+  */
   public boolean guessLetter(String guess)
   {
-    boolean foundLetter = false;
-    String newSolvedPhrase = "";
+    boolean foundLetter = false; //Creates boolean for if the letter is found
+    String newSolvedPhrase = ""; //Initiates String for the solved phrase 
 
-    for (int i = 0; i < phrase.length(); i++)
+    for (int i = 0; i < phrase.length(); i++) //For loop that goes through each letter of the phrase 
     {
-      if (phrase.substring(i, i + 1).equals(guess))
+      if (phrase.substring(i, i + 1).equals(guess)) //checks if the letter equals the guess 
       {
-        newSolvedPhrase += guess + " ";
-        foundLetter = true;
+        newSolvedPhrase += guess + " "; //if guessed correctly, adds guess to the solved phrase
+        foundLetter = true; //sets boolean to true 
       }
       else
       {
-        newSolvedPhrase += solvedPhrase.substring(i * 2, i * 2 + 1) + " ";  
+        newSolvedPhrase += solvedPhrase.substring(i * 2, i * 2 + 1) + " "; //Added in spaces where appropriate 
       }
     }
-    solvedPhrase = newSolvedPhrase;
-    return foundLetter;
+    solvedPhrase = newSolvedPhrase; //sets variable solvedPhrase to the new solved phrase
+    return foundLetter; //returns the letter that is found 
   } 
 } 
