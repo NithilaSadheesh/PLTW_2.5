@@ -11,9 +11,10 @@ Checks to see if the user's guess is valid and found within secret phrase
 
 @author: Paige Nothelfer, Nithila Sadheesh, Sanjitha Saravanan
 @version: 1
+@date: 11/5/23
 
 */
-public class  Board
+public class Board
 {
   private String solvedPhrase;
   private String phrase;
@@ -28,11 +29,11 @@ public class  Board
   Pre-condition: loadPhrase() and setLetterValue() are properly declared and written, 
     instance variables are properly declared 
   Post-condition: solvedPhrase, phrase, and currentLetterValue are initialized and 
-    solvedPhrase and setLetterValue have assigned values 
+    solvedPhrase and setLetterValue have fassigned values 
   */ 
-  public void Board() {
-    solvedPhrase = loadPhrase(); 
-    phrase = "";
+  public Board() {
+    solvedPhrase = "";
+    phrase = loadPhrase();
     setLetterValue(); 
     //Testing
     //System.out.println("Phrase: " + phrase); 
@@ -180,8 +181,7 @@ public class  Board
   @param String
   @return boolean 
   Checks if the user's letter is found within the secret phrase   
-  Pre-condition: method call is assigned to variable or printed, solvedPhrase and phrase are 
-    properly declared 
+  Pre-condition: method call is assigned to variable or printed, solvedPhrase and phrase are properly declared 
   Post-condition: true or false is returned to the method call, solvedPhrase is set to a new
     phrase that contains the guessed letters 
   */
@@ -194,8 +194,11 @@ public class  Board
     {
       if (phrase.substring(i, i + 1).equals(guess)) //checks if the letter equals the guess 
       {
-        newSolvedPhrase += guess + " "; //if guessed correctly, adds guess to the solved phrase
-        foundLetter = true; //sets boolean to true 
+        // TESTING
+        if (newSolvedPhrase.indexOf(guess) != -1) {
+          newSolvedPhrase += guess + " "; //if guessed correctly, adds guess to the solved phrase
+          foundLetter = true; //sets boolean to true 
+        }
       }
       else
       {
@@ -204,5 +207,30 @@ public class  Board
     }
     solvedPhrase = newSolvedPhrase; //sets variable solvedPhrase to the new solved phrase
     return foundLetter; //returns the letter that is found 
+  } 
+
+  /** 
+  guessPhrase() 
+  @param String
+  @return boolean 
+  Checks if the user's guess matches the secret phrase    
+  Pre-condition: method call is assigned to variable or printed, solvedPhrase and phrase are properly declared 
+  Post-condition: true or false is returned to the method call, solvedPhrase is set to a new phrase that contains the secret phrase 
+  */
+  public boolean guessPhrase(String guess)
+  {
+    boolean solvedPuzzle = false; //Creates boolean for if the guess is correct
+    String newSolvedPhrase = ""; //Initiates String for the solved phrase 
+
+    if(guess.equals(phrase)) {
+      solvedPuzzle = true; 
+      for(int i = 0; i < guess.length(); i++) {
+        newSolvedPhrase += phrase.substring(i, i+1) + " ";
+      }
+    } else {
+      newSolvedPhrase = solvedPhrase;
+    }
+    solvedPhrase = newSolvedPhrase; //sets variable solvedPhrase to the new solved phrase
+    return solvedPuzzle; //returns the puzzle is solved or not 
   } 
 } 
